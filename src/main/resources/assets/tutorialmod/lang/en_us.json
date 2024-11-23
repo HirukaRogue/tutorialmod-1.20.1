@@ -1,0 +1,24 @@
+{
+  "item.tutorialmod.sapphire": "Sapphire",
+  "item.tutorialmod.raw_sapphire": "Raw Sapphire",
+
+  "item.tutorialmod.metal_detector": "Metal Detector",
+
+  "item.tutorialmod.strawberry": "Strawberry",
+
+  "item.tutorialmod.pine_cone": "Pine Cone",
+
+  "block.tutorialmod.sapphire_block": "Sapphire Block",
+  "block.tutorialmod.raw_sapphire_block": "Raw Sapphire Block",
+
+  "block.tutorialmod.sapphire_ore": "Sapphire Ore",
+  "block.tutorialmod.deepslate_sapphire_ore": "Deepslate Sapphire Ore",
+  "block.tutorialmod.nether_sapphire_ore": "Nether Sapphire Ore",
+  "block.tutorialmod.end_sapphire_ore": "End Sapphire Ore",
+
+  "block.tutorialmod.sound_block": "Sound Block",
+
+  "creativetab.tutorialmod_tab": "Tutorial Mod",
+
+  "tooltip.tutorialmod.metal_detector.tooltip": "Detects metal, not ores"
+}
