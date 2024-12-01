@@ -1,4 +1,4 @@
-package net.hirukarogue.tutorialmod.item.custom;
+package net.hirukarogue.tutorialmod.item;
 
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
