@@ -1,9 +1,14 @@
 package net.hirukarogue.tutorialmod.item;
 
 import net.hirukarogue.tutorialmod.TutorialMod;
-import net.hirukarogue.tutorialmod.block.custom.FuelItem;
+import net.hirukarogue.tutorialmod.block.ModBlocks;
+import net.hirukarogue.tutorialmod.entity.ModEntities;
+import net.hirukarogue.tutorialmod.item.custom.FuelItem;
 import net.hirukarogue.tutorialmod.item.custom.MetalDetectorItem;
+import net.hirukarogue.tutorialmod.item.custom.ModArmorItem;
+import net.hirukarogue.tutorialmod.sound.ModSounds;
 import net.minecraft.world.item.*;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -19,6 +24,10 @@ public class ModItems {
             ITEMS.register("sapphire", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> RAW_SAPPHIRE =
             ITEMS.register("raw_sapphire", () -> new Item(new Item.Properties()));
+
+    //music discs
+    public static final RegistryObject<Item> BAR_BRAWL_MUSIC_DISC =
+            ITEMS.register("bar_brawl_music_disc", () -> new RecordItem(6, ModSounds.BAR_BRAWL, new Item.Properties().stacksTo(1), 2440));
 
     //advanced items
     public static final RegistryObject<Item> METAL_DETECTOR =
@@ -42,7 +51,7 @@ public class ModItems {
 
     //armors
     public static final RegistryObject<Item> SAPPHIRE_HELMET =
-            ITEMS.register("sapphire_helmet", () -> new ArmorItem(ModArmorMaterials.SAPPHIRE, ArmorItem.Type.HELMET, new Item.Properties()));
+            ITEMS.register("sapphire_helmet", () -> new ModArmorItem(ModArmorMaterials.SAPPHIRE, ArmorItem.Type.HELMET, new Item.Properties()));
     public static final RegistryObject<Item> SAPPHIRE_CHESTPLATE =
             ITEMS.register("sapphire_chestplate", () -> new ArmorItem(ModArmorMaterials.SAPPHIRE, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
     public static final RegistryObject<Item> SAPPHIRE_LEGGINGS =
@@ -53,10 +62,22 @@ public class ModItems {
     //food items
     public static final RegistryObject<Item> STRAWBERRY =
             ITEMS.register("strawberry", () -> new Item(new Item.Properties().food(ModFoods.STRAWBERRY)));
+    public static final RegistryObject<Item> CORN =
+            ITEMS.register("corn", () -> new Item(new Item.Properties().food(ModFoods.CORN)));
+
+    //seeds
+    public static final RegistryObject<Item> STRAWBERRY_SEEDS =
+            ITEMS.register("strawberry_seeds", () -> new ItemNameBlockItem(ModBlocks.STRAWBERRY_CROP.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CORN_SEEDS =
+            ITEMS.register("corn_seeds", () -> new ItemNameBlockItem(ModBlocks.CORN_CROP.get(), new Item.Properties()));
 
     //fuel items
     public static final RegistryObject<Item> PINE_CONE =
             ITEMS.register("pine_cone", () -> new FuelItem(new Item.Properties(), 400));
+
+    //spawn eggs
+    public static final RegistryObject<Item> RHINO_SPAWN_EGG =
+            ITEMS.register("rhino_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.RHINO, 0x7e9680, 0xc5d1c5, new Item.Properties()));
 
     //item method setup
     public static void register(IEventBus eventBus) {

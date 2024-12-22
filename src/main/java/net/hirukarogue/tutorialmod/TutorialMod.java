@@ -2,9 +2,17 @@ package net.hirukarogue.tutorialmod;
 
 import com.mojang.logging.LogUtils;
 import net.hirukarogue.tutorialmod.block.ModBlocks;
+import net.hirukarogue.tutorialmod.entity.ModEntities;
+import net.hirukarogue.tutorialmod.entity.client.RhinoRenderer;
+import net.hirukarogue.tutorialmod.villager.ModVillagers;
 import net.hirukarogue.tutorialmod.item.ModCreativeModeTabs;
 import net.hirukarogue.tutorialmod.item.ModItems;
+import net.hirukarogue.tutorialmod.loot.ModLootModifiers;
+import net.hirukarogue.tutorialmod.sound.ModSounds;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -34,6 +42,14 @@ public class TutorialMod {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 
+        ModLootModifiers.register(modEventBus);
+
+        ModVillagers.register(modEventBus);
+
+        ModEntities.register(modEventBus);
+
+        ModSounds.register(modEventBus);
+
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
@@ -48,7 +64,9 @@ public class TutorialMod {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
+        event.enqueueWork(() -> {
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(ModBlocks.CATMINT.getId(), ModBlocks.POTTED_CATMINT);
+        });
     }
 
     // Add the example block item to the building blocks tab
@@ -70,7 +88,7 @@ public class TutorialMod {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            EntityRenderers.register(ModEntities.RHINO.get(), RhinoRenderer::new);
         }
     }
 }

@@ -16,8 +16,16 @@
   "item.tutorialmod.sapphire_boots": "Sapphire Boots",
 
   "item.tutorialmod.metal_detector": "Metal Detector",
+  "sounds.tutorialmod.metal_detector_found_ore": "Metal Detector Jingle",
+
+  "item.tutorialmod.bar_brawl_music_disc": "Bar Brawl Music Disc",
+  "item.tutorialmod.bar_brawl_music_disc.desc": "Bryan Tech - Bar Brawl (DC0)",
 
   "item.tutorialmod.strawberry": "Strawberry",
+  "item.tutorialmod.strawberry_seeds": "Strawberry Seeds",
+
+  "item.tutorialmod.corn": "Corn",
+  "item.tutorialmod.corn_seeds": "Corn Seeds",
 
   "item.tutorialmod.pine_cone": "Pine Cone",
 
@@ -43,6 +51,10 @@
   "block.tutorialmod.end_sapphire_ore": "End Sapphire Ore",
 
   "block.tutorialmod.sound_block": "Sound Block",
+
+  "minecraft.entity.villager.tutorialmod.soundmaster": "Sound Master",
+
+  "block.tutorialmod.catmint": "Catmint",
 
   "creativetab.tutorialmod_tab": "Tutorial Mod",
 

@@ -35,6 +35,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         trimMaterials.put(TrimMaterials.LAPIS, 0.9F);
         trimMaterials.put(TrimMaterials.AMETHYST, 1.0F);
     }
+
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, TutorialMod.MOD_ID, existingFileHelper);
     }
@@ -43,6 +44,29 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         simpleItem(ModItems.SAPPHIRE);
         simpleItem(ModItems.RAW_SAPPHIRE);
+
+        simpleItem(ModItems.METAL_DETECTOR);
+        simpleItem(ModItems.PINE_CONE);
+        simpleItem(ModItems.STRAWBERRY);
+        simpleItem(ModItems.STRAWBERRY_SEEDS);
+
+        simpleItem(ModItems.CORN);
+        simpleItem(ModItems.CORN_SEEDS);
+
+        simpleItem(ModItems.BAR_BRAWL_MUSIC_DISC);
+
+        simpleBlockItem(ModBlocks.SAPPHIRE_DOOR);
+
+        fenceItem(ModBlocks.SAPPHIRE_FENCE, ModBlocks.SAPPHIRE_BLOCK);
+        buttonItem(ModBlocks.SAPPHIRE_BUTTON, ModBlocks.SAPPHIRE_BLOCK);
+        wallItem(ModBlocks.SAPPHIRE_WALL, ModBlocks.SAPPHIRE_BLOCK);
+
+        evenSimplerBlockItem(ModBlocks.SAPPHIRE_STAIRS);
+        evenSimplerBlockItem(ModBlocks.SAPPHIRE_SLAB);
+        evenSimplerBlockItem(ModBlocks.SAPPHIRE_PRESSURE_PLATE);
+        evenSimplerBlockItem(ModBlocks.SAPPHIRE_FENCE_GATE);
+
+        trapdoorItem(ModBlocks.SAPPHIRE_TRAP_DOOR);
 
         handheldItem(ModItems.SAPPHIRE_SWORD);
         handheldItem(ModItems.SAPPHIRE_PICKAXE);
@@ -55,24 +79,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(ModItems.SAPPHIRE_LEGGINGS);
         trimmedArmorItem(ModItems.SAPPHIRE_BOOTS);
 
-        simpleBlockItem(ModBlocks.SAPPHIRE_DOOR);
-        trapdoorItem(ModBlocks.SAPPHIRE_TRAP_DOOR);
+        simpleBlockItemBlockTexture(ModBlocks.CATMINT);
 
-        evenSimplerBlockItem(ModBlocks.SAPPHIRE_STAIRS);
-        evenSimplerBlockItem(ModBlocks.SAPPHIRE_SLAB);
-
-        fenceItem(ModBlocks.SAPPHIRE_FENCE, ModBlocks.SAPPHIRE_BLOCK);
-        evenSimplerBlockItem(ModBlocks.SAPPHIRE_FENCE_GATE);
-        wallItem(ModBlocks.SAPPHIRE_WALL, ModBlocks.SAPPHIRE_BLOCK);
-
-        buttonItem(ModBlocks.SAPPHIRE_BUTTON, ModBlocks.SAPPHIRE_BLOCK);
-        evenSimplerBlockItem(ModBlocks.SAPPHIRE_PRESSURE_PLATE);
-
-        simpleItem(ModItems.METAL_DETECTOR);
-
-        simpleItem(ModItems.STRAWBERRY);
-
-        simpleItem(ModItems.PINE_CONE);
+        withExistingParent(ModItems.RHINO_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     }
 
     // Shoutout to El_Redstoniano for making this
@@ -164,5 +173,11 @@ public class ModItemModelProvider extends ItemModelProvider {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(TutorialMod.MOD_ID,"item/" + item.getId().getPath()));
+    }
+
+    private ItemModelBuilder simpleBlockItemBlockTexture(RegistryObject<Block> item) {
+        return withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(TutorialMod.MOD_ID,"block/" + item.getId().getPath()));
     }
 }

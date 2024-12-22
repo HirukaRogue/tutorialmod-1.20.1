@@ -1,4 +1,4 @@
-package net.hirukarogue.tutorialmod.block.custom;
+package net.hirukarogue.tutorialmod.item.custom;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
