@@ -2,11 +2,11 @@ package net.hirukarogue.tutorialmod.block;
 
 import net.hirukarogue.tutorialmod.TutorialMod;
 import net.hirukarogue.tutorialmod.block.custom.CornCropBlock;
+import net.hirukarogue.tutorialmod.block.custom.GemPolisherBlock;
 import net.hirukarogue.tutorialmod.block.custom.SoundBlock;
 import net.hirukarogue.tutorialmod.block.custom.StrawberryCropBlock;
 import net.hirukarogue.tutorialmod.item.ModItems;
 import net.hirukarogue.tutorialmod.sound.ModSounds;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
@@ -133,6 +133,10 @@ public class ModBlocks {
             registerBlock("sound_block", () -> new SoundBlock(BlockBehaviour.Properties
                     .copy(Blocks.IRON_BLOCK).sound(ModSounds.SOUND_BLOCK_SOUNDS)));
 
+    //Custom Block
+    public static final RegistryObject<Block> GEM_POLSHER =
+            registerBlock("gem_polisher", () -> new GemPolisherBlock(BlockBehaviour.Properties
+                    .copy(Blocks.IRON_BLOCK).noOcclusion()));
 
     //setup methods
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

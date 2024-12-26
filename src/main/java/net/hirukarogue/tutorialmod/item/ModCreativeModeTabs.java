@@ -73,6 +73,8 @@ public class ModCreativeModeTabs {
 
                         pOutput.accept(ModBlocks.SOUND_BLOCK.get());
 
+                        pOutput.accept(ModBlocks.GEM_POLSHER.get());
+
                         pOutput.accept(ModBlocks.CATMINT.get());
                     })
                     .build());

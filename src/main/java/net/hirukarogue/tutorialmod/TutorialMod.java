@@ -2,13 +2,17 @@ package net.hirukarogue.tutorialmod;
 
 import com.mojang.logging.LogUtils;
 import net.hirukarogue.tutorialmod.block.ModBlocks;
+import net.hirukarogue.tutorialmod.block.entity.ModBlockEntities;
 import net.hirukarogue.tutorialmod.entity.ModEntities;
 import net.hirukarogue.tutorialmod.entity.client.RhinoRenderer;
+import net.hirukarogue.tutorialmod.screen.GemPolisherScreen;
+import net.hirukarogue.tutorialmod.screen.ModMenuTypes;
 import net.hirukarogue.tutorialmod.villager.ModVillagers;
 import net.hirukarogue.tutorialmod.item.ModCreativeModeTabs;
 import net.hirukarogue.tutorialmod.item.ModItems;
 import net.hirukarogue.tutorialmod.loot.ModLootModifiers;
 import net.hirukarogue.tutorialmod.sound.ModSounds;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
@@ -48,7 +52,11 @@ public class TutorialMod {
 
         ModEntities.register(modEventBus);
 
+        ModBlockEntities.register(modEventBus);
+
         ModSounds.register(modEventBus);
+
+        ModMenuTypes.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -89,6 +97,8 @@ public class TutorialMod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.RHINO.get(), RhinoRenderer::new);
+
+            MenuScreens.register(ModMenuTypes.GEM_POLISHER_MENU.get(), GemPolisherScreen::new);
         }
     }
 }
