@@ -1,10 +1,14 @@
 package net.hirukarogue.tutorialmod.block.entity;
 
 import net.hirukarogue.tutorialmod.item.ModItems;
+import net.hirukarogue.tutorialmod.recipe.GemPolishingRecipe;
 import net.hirukarogue.tutorialmod.screen.GemPolisherMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -26,8 +30,19 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 public class GemPolisherBlockEntity extends BlockEntity implements MenuProvider {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(2);
+    private final ItemStackHandler itemHandler = new ItemStackHandler(2){
+        @Override
+        protected void onContentsChanged(int slot) {
+            super.onContentsChanged(slot);
+            setChanged();
+            if (!level.isClientSide()) {
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            }
+        }
+    };
 
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
@@ -64,6 +79,14 @@ public class GemPolisherBlockEntity extends BlockEntity implements MenuProvider 
                 return 2;
             }
         };
+    }
+
+    public ItemStack getRenderStack() {
+        if (itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty()) {
+            return itemHandler.getStackInSlot(INPUT_SLOT);
+        } else {
+            return itemHandler.getStackInSlot(OUTPUT_SLOT);
+        }
     }
 
     @Override
@@ -109,7 +132,7 @@ public class GemPolisherBlockEntity extends BlockEntity implements MenuProvider 
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("invetory", itemHandler.serializeNBT());
+        pTag.put("inventory", itemHandler.serializeNBT());
         pTag.putInt("gem_polisher.progress", progress);
 
         super.saveAdditional(pTag);
@@ -141,7 +164,9 @@ public class GemPolisherBlockEntity extends BlockEntity implements MenuProvider 
     }
 
     private void craftItem() {
-        ItemStack result = new ItemStack(ModItems.SAPPHIRE.get(), 1);
+        Optional<GemPolishingRecipe> recipe = getCurrentRecipe();
+        ItemStack result = recipe.get().getResultItem(null);
+
         this.itemHandler.extractItem(INPUT_SLOT, 1, false);
 
         this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
@@ -157,10 +182,23 @@ public class GemPolisherBlockEntity extends BlockEntity implements MenuProvider 
     }
 
     private boolean hasRecipe() {
-        boolean hasCraftingItem = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == ModItems.RAW_SAPPHIRE.get();
-        ItemStack result = new ItemStack(ModItems.SAPPHIRE.get());
+        Optional<GemPolishingRecipe> recipe = getCurrentRecipe();
 
-        return hasCraftingItem && canInsertAmoutIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
+        if (recipe.isEmpty()) {
+            return false;
+        }
+        ItemStack result = recipe.get().getResultItem(getLevel().registryAccess());
+
+        return canInsertAmoutIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
+    }
+
+    private Optional<GemPolishingRecipe> getCurrentRecipe() {
+        SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
+        }
+
+        return this.level.getRecipeManager().getRecipeFor(GemPolishingRecipe.Type.INSTANCE, inventory, level);
     }
 
     private boolean canInsertItemIntoOutputSlot(Item item) {
@@ -169,5 +207,16 @@ public class GemPolisherBlockEntity extends BlockEntity implements MenuProvider 
 
     private boolean canInsertAmoutIntoOutputSlot(int count) {
         return this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + count <= this.itemHandler.getStackInSlot(OUTPUT_SLOT).getMaxStackSize();
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        return saveWithoutMetadata();
     }
 }

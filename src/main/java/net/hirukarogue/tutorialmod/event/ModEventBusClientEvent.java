@@ -1,6 +1,8 @@
 package net.hirukarogue.tutorialmod.event;
 
 import net.hirukarogue.tutorialmod.TutorialMod;
+import net.hirukarogue.tutorialmod.block.entity.ModBlockEntities;
+import net.hirukarogue.tutorialmod.block.entity.renderer.GemPolisherBlockEntityRenderer;
 import net.hirukarogue.tutorialmod.entity.client.ModModelLayers;
 import net.hirukarogue.tutorialmod.entity.client.RhinoModel;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,4 +18,8 @@ public class ModEventBusClientEvent {
         event.registerLayerDefinition(ModModelLayers.RHINO_LAYER, RhinoModel::createBodyLayer);
     }
 
+    @SubscribeEvent
+    public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(ModBlockEntities.GEM_POLISHER_BE.get(), GemPolisherBlockEntityRenderer::new);
+    }
 }

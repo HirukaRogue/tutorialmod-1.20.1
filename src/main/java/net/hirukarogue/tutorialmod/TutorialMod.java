@@ -5,6 +5,7 @@ import net.hirukarogue.tutorialmod.block.ModBlocks;
 import net.hirukarogue.tutorialmod.block.entity.ModBlockEntities;
 import net.hirukarogue.tutorialmod.entity.ModEntities;
 import net.hirukarogue.tutorialmod.entity.client.RhinoRenderer;
+import net.hirukarogue.tutorialmod.recipe.ModRecipes;
 import net.hirukarogue.tutorialmod.screen.GemPolisherScreen;
 import net.hirukarogue.tutorialmod.screen.ModMenuTypes;
 import net.hirukarogue.tutorialmod.villager.ModVillagers;
@@ -57,6 +58,8 @@ public class TutorialMod {
         ModSounds.register(modEventBus);
 
         ModMenuTypes.register(modEventBus);
+
+        ModRecipes.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);

@@ -81,6 +81,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         simpleBlockItemBlockTexture(ModBlocks.CATMINT);
 
+        evenSimplerBlockItem(ModBlocks.GEM_POLSHER);
+
         withExistingParent(ModItems.RHINO_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     }
 
